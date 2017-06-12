@@ -1,0 +1,139 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>Todo List</title>
+    <link rel="stylesheet" type="text/css" href="../dist/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../assets/semantic-ui-calendar/dist/calendar.min.css" />
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../assets/semantic-ui-calendar/dist/calendar.min.js"></script>
+    <script src="../dist/semantic.min.js"></script>
+    <link href='../assets/styles.css' rel= 'stylesheet' type='text/css'/>
+</head>
+<body>
+<div class="ui wide sidebar inverted vertical menu">
+    <a class="item" id="close-nav">
+        CLOSE [X]
+    </a>
+    <a href="/completed/" class="item">
+        Competed
+    </a>
+    <a href="/todo/" class="item">
+        All Tasks
+    </a>
+    <!--<a class="item">
+        My Account
+    </a>
+    <a class="item">
+        Logout
+    </a>-->
+    <a href="/todo/task" class="item">
+        Add Task
+    </a>
+    <a href="/todo/list" class="item">
+        Task List
+    </a>
+    <a href="/todo/list" class="item">
+        Add List
+    </a>
+    <!--<a class="item">
+        Exit
+    </a>-->
+</div>
+<div class="pusher">
+    <!-- Site content !-->
+
+    <div class="ui segment" style="background-color: #000;border-radius: 0; height: 45px;">
+        <div class="content">
+            <div class="ui grid">
+                <div class="five wide column">
+                    <a href="javascript:void();" id="nav-toggle" style="padding: 10px;color: #FFF;">
+                        <i class="content icon white"></i>
+                    </a>
+                </div>
+                <div class="ten wide column nav-menu-drop">
+                    <span style="color: #fff;text-transform: uppercase;">Add Task</span>
+                </div>
+                <div class="one wide column"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid">
+        <div class="sixteen wide column" style="padding-top: 0;">
+<div class="container" id='todo-table' style="padding: 20px;">
+    <form id="todoForm" class="ui form">
+        <div class="field">
+            <label>Add task</label>
+            <input type="text" autocomplete="off" id="item" name='item' placeholder='Add new item...' required />
+        </div>
+        <div class="field ui calendar" id="example2">
+            <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" id="sel_date" placeholder="Date">
+            </div>
+        </div>
+        <div class="ui form">
+            <div class="field">
+                <select class="dropdown" id="list_id">
+                    <option value="0">Default</option>
+                    <% for (var i = 0; i < category.length; i++) { %>
+                    <option value="<%= category[i].id%>"><%= category[i].cate %></option>
+                    <% } %>
+                </select>
+            </div>
+        </div>
+        <br />
+        <button class="ui green button" type="submit">Add Task</button>
+    </form>
+</div>
+        </div>
+    </div>
+</div>
+<div class="ui modal">
+    <div class="header">
+        Task Completed?
+    </div>
+    <div class="actions">
+        <div id="nope" class="ui black deny button">
+            Nope
+        </div>
+        <div id="yep" class="ui positive right labeled icon button">
+            Yep!
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+            <div id="load_screen" style="display: none;">
+                <div id="loading">
+                    <div class="ui centered inline active loader"></div>
+                </div>
+            </div>
+            <script src="/assets/todo-list.js"></script>
+            <script type="text/javascript">
+                $('.ui.checkbox')
+                    .checkbox()
+                ;
+                $('#nav-toggle').on('click', function (e) {
+                    $('.ui.sidebar')
+                        .sidebar('toggle')
+                    ;
+                });
+                $('.ui.dropdown')
+                    .dropdown();
+                $('select.dropdown')
+                    .dropdown()
+                ;
+            </script>
+            <script type="text/javascript">
+                $('#example2').calendar({
+                    type: 'date'
+                });
+            </script>
+</body>
+</html>

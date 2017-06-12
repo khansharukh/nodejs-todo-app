@@ -1,0 +1,148 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>Todo List</title>
+    <link rel="stylesheet" type="text/css" href="../dist/semantic.min.css">
+    <link rel="stylesheet" href="animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="../dist/semantic.min.js"></script>
+<link href='../assets/styles.css' rel= 'stylesheet' type='text/css'/>
+</head>
+<body>
+<div class="ui wide sidebar inverted vertical menu">
+    <a class="item" id="close-nav">
+        CLOSE [X]
+    </a>
+    <a href="/completed/" class="item">
+        Competed
+    </a>
+    <a href="/todo/" class="item">
+        All Tasks
+    </a>
+        <!--<a class="item">
+            My Account
+        </a>
+        <a class="item">
+            Logout
+        </a>-->
+    <a href="/todo/task" class="item">
+        Add Task
+    </a>
+    <a href="/todo/list" class="item">
+        Task List
+    </a>
+    <a href="/todo/list" class="item">
+        Add List
+    </a>
+    <!--<a class="item">
+        Exit
+    </a>-->
+</div>
+<div class="pusher">
+    <!-- Site content !-->
+
+    <div class="ui segment" style="background-color: #000;border-radius: 0; height: 45px;">
+        <div class="content">
+            <div class="ui grid">
+                <div class="five wide column">
+                    <a href="javascript:void();" id="nav-toggle" style="padding: 10px;color: #FFF;">
+                        <i class="content icon white"></i>
+                    </a>
+                </div>
+                <div class="ten wide column nav-menu-drop">
+                    <select class="ui dropdown" id="change_list">
+                        <option value="0">Default</option>
+                        <% for (var i = 0; i < category.length; i++) { %>
+                        <option value="<%= category[i].id%>" <%= cid[0].cid == category[i].id ? 'selected' : ''%>><%= category[i].cate %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="one wide column"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid">
+        <div class="sixteen wide column" style="padding-top: 0;">
+            <div id='todo-table'>
+                <div class="ui segments">
+                    <%
+                    var colors = ['black', 'red', 'blue', 'green', 'yellow', 'orange', 'violet', 'pink', 'brown'];
+                    var j = 0;
+                    for (var i = 0; i < todos.length; i++) {
+                    %>
+                    <a href="javascript:void(0);">
+                        <div class="ui <%= colors[j] %> segment" id="slide_<%= todos[i].id %>" style="border-bottom: none; border-right: none; border-left:none;<%= i===0 ? 'border-top: 0; border-radius: 0;' : ''; %>">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" class="hidden todo-check" id="todo-check-<%= todos[i].id %>" name="todo-check" data-id="<%= todos[i].id %>">
+                                <label>
+                                    <div>
+                                        <%= todos[i].item %>
+                                    </div>
+                                    <% if(moment().format("YYYY-MM-DD") > moment(todos[i].sel_date).format("YYYY-MM-DD")) {%>
+                                    <div style="font-size: 11px;color: crimson;">
+                                        <%= moment(todos[i].sel_date).format("YYYY-MM-DD"); %> -
+                                        <span style="border: 1px solid crimson;padding: 3px;text-transform: uppercase;font-size: 9px;letter-spacing: 1px;">Overdue</span>
+                                    </div>
+                                    <% } else { %>
+                                    <div style="font-size: 11px;color: #2c662d">
+                                        <%= moment(todos[i].sel_date).format("YYYY-MM-DD"); %>
+                                    </div>
+                                    <% } %>
+                                </label>
+                            </div>
+                        </div>
+                    </a>
+                    <%
+                        j++;
+                        if(j > 8) {
+                            j = 0;
+                        }
+                    } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui modal">
+        <div class="header">
+            Task Completed?
+        </div>
+        <div class="actions">
+            <div id="nope" class="ui black deny button">
+                Nope
+            </div>
+            <div id="yep" class="ui positive right labeled icon button">
+                Yep!
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="load_screen" style="display: none;">
+    <div id="loading">
+        <div class="ui centered inline active loader"></div>
+    </div>
+</div>
+    <script src="/assets/todo-list.js"></script>
+<script type="text/javascript">
+    $('.ui.checkbox')
+        .checkbox()
+    ;
+    $('#nav-toggle').on('click', function (e) {
+        $('.ui.sidebar')
+            .sidebar('toggle')
+        ;
+    });
+    $('.ui.dropdown')
+        .dropdown();
+</script>
+</body>
+</html>
